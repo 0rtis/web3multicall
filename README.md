@@ -17,9 +17,10 @@ https://pypi.org/project/w3multicall/
 
 *This software is derived from [multicall.py](https://github.com/banteg/multicall.py).
 However, [multicall.py](https://github.com/banteg/multicall.py) is built on [asyncio](https://docs.python.org/3/library/asyncio.html) and
-[does not support multi-threading](https://github.com/banteg/multicall.py/issues/77)*
+[does not support multi-threading](https://github.com/banteg/multicall.py/issues/77).
+This implementation fixes that.*
 
-This implementation fixes that.
+
 
 # W3Multicall
 
