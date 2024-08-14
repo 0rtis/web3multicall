@@ -2,6 +2,7 @@ from typing import Tuple, List, Union, Optional, Any, Iterable, Callable
 
 import eth_utils
 from eth_typing.abi import Decodable, TypeStr
+from web3.types import BlockIdentifier
 
 # For eth_abi versions < 2.2.0, `decode` and `encode` have not yet been added.
 # As we require web3 ^5.27, we require eth_abi compatibility with eth_abi v2.0.0b6 and greater.
@@ -142,14 +143,14 @@ class W3Multicall:
     def add(self, call: 'W3Multicall.Call'):
         self.calls.append(call)
 
-    def call(self) -> list:
+    def call(self, block_identifier: Optional[BlockIdentifier] = None) -> list:
         args = self._get_args()
         data = _encode_data(W3Multicall.MULTICALL_SELECTOR, W3Multicall.MULTICALL_INPUT_TYPES, args)
         eth_call_params = {
             'to': self.address,
             'data': data
         }
-        rpc_response = self.web3.eth.call(eth_call_params)
+        rpc_response = self.web3.eth.call(eth_call_params, block_identifier=block_identifier)
         aggregated = _decode_output(rpc_response, W3Multicall.MULTICALL_OUTPUT_TYPES)
         unpacked = _unpack_aggregate_outputs(aggregated[1])
         outputs = []
